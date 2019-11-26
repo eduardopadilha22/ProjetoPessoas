@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css"  media="screen,projection"/>
+<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+<script type="text/javascript" src="materialize/js/materialize.js"></script>
+		<h1>Person Registration </h1>
+		<br>
+<a class="waves-effect waves-light btn" href="/registerperson">Register Person</a>
+		<br>
+
+<div th:each="p : ${personobj}">
+    <div class="row">
+        <p>ID: <span th:text="${p.id}"></span></p>
+        <p>name: <span th:text="${p.name}"></span></p>
+        <p>lastname: <span th:text="${p.lastname}"></span></p>
+        <p>Idade: <span th:text="${p.idade}"></span></p>
+    </div>
+</div>
+<br/>
+<div th:each = "m : ${msg}">
+    <span th:text="${m}"></span>
+</div>
+<br/>
+<h5>Phone</h5>
+<div class="row">
+    <form th:action="@{/adcPhonePerson/{idperson}(idperson=${personobj.id})}" method="post" class="col s12" onsubmit="return validarCampos()?true : false">
+        <div class="row">
+            <div class="input-field col s6">
+                <label for="number" class="active"> number:</label>
+                <input id="number" name="number" class="validade">
+            </div>
+
+            <div class="input-field col s6">
+                <label for="type" class="active"> Type:</label>
+                <input id="type" name="type" class="validade">
+            </div>
+        </div>
+        <input type="submit" value="Add" class="waves-effect waves-light btn">
+    </form>
+</div>
+
+<table class="striped">
+    <tr th:each="fone : ${phones}">
+        <td th:text="${fone.number}"></td>
+        <td th:text="${fone.type}"></td>
+        <td><a th:href="@{/deletephone/{idphone}(idphone = ${fone.id})}">Delete</a></td>
+    </tr>
+
+</table>
+
+<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+<script type="text/javascript" src="materialize/js/materialize.js"></script>
+<script type="text/javascript">
+    function validarCampos(){
+        number  =  document.getElementById('number').value;
+        type  =  document.getElementById('type').value;
+        if(number === ''){
+            alert('numero deve ser informado');
+            return false;
+        }
+        if(type === ''){
+           alert('tipo deve ser informado');
+           return false;
+        }
+        return true;
+    }
+
+</script>
+</body>
+
+</html>
